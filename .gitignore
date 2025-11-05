@@ -1,6 +1,21 @@
-build
-out
-.cache
-.idea
-.vs
-.vscode
+# Fichiers de build
+cmake-build-*/
+build/
+bin/
+
+# Dépendances téléchargées
+_deps/
+
+# IDE
+.idea/
+*.user
+
+# Exécutables
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Autres
+*.log
+.DS_Store

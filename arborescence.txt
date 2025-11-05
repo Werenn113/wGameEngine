@@ -1,0 +1,13 @@
+wGameEngine/
+├── include/
+│   ├── Core/           # Classes fondamentales (Game, Engine, etc.)
+│   ├── States/         # Gestion des états
+│   ├── Entities/       # Personnages, ennemis, objets
+│   ├── Components/     # Systèmes de composants
+│   ├── Systems/        # Systèmes de jeu (physique, collision, etc.)
+│   └── Utils/          # Utilitaires, helpers
+├── src/
+│   └── (structure miroir)
+├── assets/
+├── tests/              # Tests unitaires
+└── docs/               # Documentation
