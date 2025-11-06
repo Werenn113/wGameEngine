@@ -22,8 +22,8 @@ public:
     void changeState();
 
     void handleEvents(const std::optional<sf::Event> &event);
-    void update();
-    void render(sf::RenderWindow &window);
+    void update(const sf::Time &deltaTime);
+    void render();
 };
 
 

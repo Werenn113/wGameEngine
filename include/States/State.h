@@ -9,17 +9,18 @@
 #include "SFML/Graphics/RenderWindow.hpp"
 
 class State {
-protected:
-    std::string m_stateName;
-
 public:
     State();
-    explicit State(const std::string &name);
+    explicit State(const std::string &name, sf::RenderWindow &window);
     virtual ~State() = default;
 
     virtual State* handleEvents(const std::optional<sf::Event> &event) = 0;
-    virtual void update() = 0;
-    virtual void render(sf::RenderWindow &window) = 0;
+    virtual void update(const sf::Time &deltaTime) = 0;
+    virtual void render() = 0;
+
+protected:
+    std::string m_stateName;
+    sf::RenderWindow &m_window;
 };
 
 

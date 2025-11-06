@@ -36,14 +36,14 @@ void StateManager::handleEvents(const std::optional<sf::Event> &event) {
     }
 }
 
-void StateManager::update() {
+void StateManager::update(const sf::Time &deltaTime) {
     if (!m_stateStack.empty()) {
-        m_stateStack.top()->update();
+        m_stateStack.top()->update(deltaTime);
     }
 }
 
-void StateManager::render(sf::RenderWindow &window) {
+void StateManager::render() {
     if (!m_stateStack.empty()) {
-        m_stateStack.top()->render(window);
+        m_stateStack.top()->render();
     }
 }

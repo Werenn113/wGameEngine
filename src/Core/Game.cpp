@@ -9,7 +9,7 @@
 Game::Game()
     : m_window(sf::VideoMode({800, 600}), "wGameEngine")
     , m_isRunning(true)
-    , m_stateManager(StateManager(new MenuState))
+    , m_stateManager(StateManager(new MenuState(m_window)))
 {
     m_window.setFramerateLimit(FPS_LIMIT);
 }
@@ -22,11 +22,11 @@ Game::~Game() {
 
 void Game::run() {
     while (m_isRunning && m_window.isOpen()) {
-        float dt = m_clock.restart().asSeconds();
+        sf::Time deltaTime = m_clock.restart();
 
         handleEvents();
-        m_stateManager.update();
-        m_stateManager.render(m_window);
+        m_stateManager.update(deltaTime);
+        m_stateManager.render();
     }
 }
 
