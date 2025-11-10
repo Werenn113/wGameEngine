@@ -17,8 +17,19 @@ public:
     void update(const sf::Time &deltaTime) override;
     void render() override;
 
+    void updateCamera();
+
 private:
     Player m_player;
+    sf::View m_camera;
+    sf::RectangleShape m_testObject;
+
+    static constexpr float LEVEL_WIDTH = 3200.f;
+    static constexpr float LEVEL_HEIGHT = 600.f;
+    static constexpr float WINDOW_WIDTH = 800.f;
+    static constexpr float WINDOW_HEIGHT = 600.f;
+
+    static constexpr float PLAYER_SCREEN_POSITION = 0.33f;
 };
 
 

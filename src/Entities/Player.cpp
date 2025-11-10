@@ -10,9 +10,13 @@
 
 #include "SFML/Graphics/RectangleShape.hpp"
 
-Player::Player() : m_position(100, 100), m_speed(0, 0), m_acceleration(0, 0) {}
+Player::Player() : m_position(100, 100), m_speed(0, 0), m_acceleration(0, 0), m_isGrounded(false) {}
 
 Player::~Player() {}
+
+sf::Vector2f Player::getPosition() {
+    return m_position;
+}
 
 void Player::setDirection(sf::Vector2f newDirection) {
     m_direction = newDirection;
@@ -48,16 +52,15 @@ void Player::move(const sf::Time &deltaTime) {
     else
         m_acceleration.x = -m_speed.x * FRICTION;
 
-    float speedMagnitude = std::sqrt(m_speed.x * m_speed.x + m_speed.y * m_speed.y);
-    if (speedMagnitude > MAX_SPEED) {
-        m_speed = (m_speed / speedMagnitude) * MAX_SPEED;
+    if (std::abs(m_speed.x) > MAX_SPEED) {
+        m_speed.x = (m_speed.x > 0) ? MAX_SPEED : -MAX_SPEED;
     }
     m_speed += m_acceleration * deltaTime.asSeconds();
     m_position += m_speed * deltaTime.asSeconds();
 
-    std::cout << "(" << m_acceleration.x << ", " << m_acceleration.y << ")";
-    std::cout << "(" << m_speed.x << ", " << m_speed.y << ")";
-    std::cout << "(" << m_position.x << ", " << m_position.y << ")" << std::endl;
+    //std::cout << "(" << m_acceleration.x << ", " << m_acceleration.y << ")";
+    //std::cout << "(" << m_speed.x << ", " << m_speed.y << ")";
+    //std::cout << "(" << m_position.x << ", " << m_position.y << ")" << std::endl;
 }
 
 void Player::gravity() {
@@ -66,10 +69,12 @@ void Player::gravity() {
 
     if (!(m_position.y + playerSize.y > terrainBounds.position.y + terrainBounds.size.y)) {
         m_acceleration.y = 412.02;
+        m_isGrounded = false;
     } else {
         m_position.y = terrainBounds.position.y + terrainBounds.size.y - playerSize.y;
         m_acceleration.y = 0;
         m_speed.y = 0;
+        m_isGrounded = true;
     }
 }
 
@@ -102,7 +107,9 @@ void Player::clampToBounds() {
 }
 
 void Player::jump() {
-    // TODO
+    if (m_isGrounded) {
+        m_speed.y = -400;
+    }
 }
 
 void Player::crouch() {

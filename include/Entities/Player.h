@@ -15,6 +15,7 @@ public:
     Player();
     ~Player();
 
+    sf::Vector2f getPosition();
     void setDirection(sf::Vector2f newDirection);
 
     void move(const sf::Time &deltaTime);
@@ -36,6 +37,8 @@ private:
     sf::Vector2f m_position;
     sf::Vector2f m_speed;
     sf::Vector2f m_acceleration;
+
+    bool m_isGrounded;
 };
 
 

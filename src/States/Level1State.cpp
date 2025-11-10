@@ -4,9 +4,16 @@
 
 #include "../../include/States/Level1State.h"
 
+#include <iostream>
+
 #include "SFML/Graphics/CircleShape.hpp"
 
 Level1State::Level1State(sf::RenderWindow &window) : State("Level_1", window) {
+    m_camera = window.getDefaultView();
+
+    m_testObject.setSize(sf::Vector2f(100.f, 100.f)); // Taille du rectangle
+    m_testObject.setFillColor(sf::Color::Green);       // Couleur visible
+    m_testObject.setPosition({100.f, 100.f});
 }
 
 Level1State::~Level1State() {
@@ -43,10 +50,23 @@ State* Level1State::handleEvents(const std::optional<sf::Event> &event) {
 
 void Level1State::update(const sf::Time &deltaTime) {
     m_player.update(deltaTime);
+    updateCamera();
 }
 
 void Level1State::render() {
     m_window.clear(sf::Color::White);
 
+    m_window.setView(m_camera);
+
+    m_window.draw(m_testObject);
     m_player.render(m_window);
+}
+
+void Level1State::updateCamera() {
+    sf::Vector2f playerPosition = m_player.getPosition();
+    float cameraPosition = playerPosition.x + WINDOW_WIDTH / 2 - 1.f/3.f * WINDOW_WIDTH;
+
+    m_camera.setCenter({cameraPosition, WINDOW_HEIGHT / 2.f});
+
+    std::cout << "(" << playerPosition.x << ", " << playerPosition.y << ")" << "-" << cameraPosition << std::endl;
 }
